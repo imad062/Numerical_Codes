@@ -6,3 +6,4 @@ FILE LIST:
 2. False Position method with ranges
 3. False Position method without ranges
 4. Newton Raphson method
+5. Secant Method

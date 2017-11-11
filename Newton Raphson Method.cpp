@@ -39,7 +39,6 @@ double NewtonRaphson(double X1, double X2)
 {
     iterationCount = 0;
 
-    //initialy there is no prevX0, so to make E > ERROR_LIMIT prevX0 is initialized with a big number
     double X0 = 0, prevX0;
 
     // we have to set a value for prevX0 initially, this value can be any random value between
@@ -65,7 +64,6 @@ double NewtonRaphson(double X1, double X2)
 int main() {
 
     int rootCount = 1;
-    double x1, x2;
 
     cout << "enter a, b, c respectively: ";
     cin >> a >> b >> c;

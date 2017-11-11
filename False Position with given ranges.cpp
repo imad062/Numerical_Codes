@@ -1,17 +1,20 @@
 /*
  * Author: <nooruddinimad@gmail.com>
  *
- * Title: Bisection method for Quadratic Equations
+ * Title: False Position method for Quadratic Equations with given range
  *
  * Input:
  *
  *  1. a, b, c
  *     These are coefficients of the equation
  *     ax^2 + bx + c
+ *  2. x1, x2
+ *     These are the given ranges who bracket a root
  *
  * Output:
- *     The root(s) of the equation
- *
+ *  1. The root(s) of the equation
+ *  2. Number of iterations taken to find the root
+ 
  */
 
 #include <iostream>
@@ -21,21 +24,25 @@
 using namespace std;
 
 double a, b, c;
+int iterationCount;
 
 double Function(double X)
 {
     return (a * X * X) + (b * X) + c ;
 }
 
-double BisectionMethod(double X1, double X2)
+double FalsePosition(double X1, double X2)
 {
+    iterationCount = 0;
 
     //initialy there is no prevX0, so to make E > ERROR_LIMIT prevX0 is initialized with a big number
     double X0 = 0, prevX0 = 9999999;
 
     while( 1 )
     {
-        X0 = (X1 + X2) / 2.00;
+        iterationCount++;
+        
+        X0 = X1 - ( Function(X1) * ( (X2 - X1) / ( Function(X2) - Function(X1) ) ) );
 
         if(abs ((X0 - prevX0) / X0) < ERROR_LIMIT )
         {
@@ -59,22 +66,14 @@ double BisectionMethod(double X1, double X2)
 int main() {
 
     int rootCount = 1;
+    double x1, x2;
+
     cout << "enter a, b, c respectively: ";
     cin >> a >> b >> c;
+    cout << "enter the ranges: ";
+    cin >> x1 >> x2;
 
-    //finding the initial value that will bracket the root(s)
-    int xmax = ceil ( sqrt( (b / a)*(b / a)  -  (2 * (c / a)) ) );
-
-    //loop starts from the negative bracketing value and runs until xmax-1
-    for (int i = -xmax; i < xmax; i++)
-    {
-        //loop runs until xmax-1 because when i = xmax - 1 , i+1 = xmax
-        if( Function(i) * Function(i+1) < 0)
-        {
-            cout << "Root " << rootCount << ": " << BisectionMethod(i, i+1) << endl;
-            rootCount++;
-        }
-    }
-
+    cout << "[ Root is: " << FalsePosition(x1, x2) <<" ]" << endl;
+    cout << "Number of Iterations: " << iterationCount << endl;
 
 }

@@ -1,7 +1,7 @@
 /*
  * Author: <nooruddinimad@gmail.com>
  *
- * Title: Euler's Method
+ * Title: Modified Euler's Method
  *
  * Input:
  *
@@ -25,17 +25,23 @@
 
 using namespace std;
 
-double Function(double X)
+double Function(double X, double Y)
 {
-    return ( 3 * X * X ) + 1;
+    return X + Y;
 }
 
-double Euler(double X0, double Y0, double H, double xFinal)
+double ModifiedEuler(double X0, double Y0, double H, double xFinal)
 {
-    while(X0 <= xFinal)
+    while(X0 < xFinal)
     {
-        Y0 = Y0 + H * Function(X0);
         X0 = X0 + H;
+        double Y1 = H * Function(X0, Y0);
+        double newY1 = Y0 + Y1;
+        double Y2 = H * Function(X0, newY1);
+        double newY0 = Y0 + ( Y1 + Y2 ) / 2;
+        
+        Y0 = newY0;
+
     }
     return Y0;
 }
@@ -46,6 +52,6 @@ int main() {
     cout << "Enter the initial X, initial Y, final X and Step Size: ";
     cin >> x0 >> y0 >> Xfinal >> h;
 
-    cout << "[ Y(" << Xfinal << ") = " << Euler(x0, y0, h, Xfinal) << " ]" << endl;
+    cout << "[ Y(" << Xfinal << ") = " << ModifiedEuler(x0, y0, h, Xfinal) << " ]" << endl;
 
 }
